@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080807">
+  <meta name="description" content="Anderson Carvalho | Nutricionista. Emagrecimento, hipertrofia, longevidade, avaliação corporal e nutrição esportiva.">
+  <title>Anderson Carvalho | Nutricionista</title>
+  <link rel="icon" href="favicon.ico">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#080807;
+      --bg2:#10100e;
+      --card:#141411;
+      --gold:#c8a45b;
+      --gold2:#e4c77e;
+      --text:#f5f2ea;
+      --muted:#aaa69c;
+      --line:rgba(200,164,91,.18);
+      --max:1180px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;
+      overflow-x:hidden;line-height:1.6;
+    }
+    body:before{
+      content:"";position:fixed;inset:0;pointer-events:none;z-index:20;
+      background:radial-gradient(circle at var(--mx,50%) var(--my,20%),rgba(200,164,91,.10),transparent 25%);
+      mix-blend-mode:screen;
+    }
+    a{text-decoration:none;color:inherit}
+    .container{width:min(calc(100% - 40px),var(--max));margin:auto}
+    .gold{color:var(--gold2)}
+    .serif{font-family:"Playfair Display",serif}
+
+    /* React-Bits-inspired visual effects */
+    .aurora{
+      position:absolute;inset:-20%;pointer-events:none;filter:blur(55px);opacity:.45;
+      background:
+        radial-gradient(circle at 25% 35%,rgba(200,164,91,.16),transparent 24%),
+        radial-gradient(circle at 75% 20%,rgba(255,255,255,.08),transparent 20%),
+        radial-gradient(circle at 60% 75%,rgba(173,120,45,.10),transparent 24%);
+      animation:aurora 12s ease-in-out infinite alternate;
+    }
+    @keyframes aurora{from{transform:translate3d(-2%,0,0) scale(1)}to{transform:translate3d(3%,2%,0) scale(1.08)}}
+    .noise{position:fixed;inset:0;pointer-events:none;opacity:.035;z-index:19;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+    .reveal.visible{opacity:1;transform:none}
+
+    header{
+      position:fixed;top:0;left:0;right:0;z-index:30;
+      background:rgba(8,8,7,.58);backdrop-filter:blur(16px);
+      border-bottom:1px solid transparent;transition:.3s;
+    }
+    header.scrolled{border-color:var(--line);background:rgba(8,8,7,.86)}
+    nav{height:76px;display:flex;align-items:center;justify-content:space-between}
+    .brand{font-weight:700;letter-spacing:.12em;font-size:13px}
+    .brand span{color:var(--gold2)}
+    .navlinks{display:flex;gap:28px;align-items:center;font-size:13px;color:#d2cec5}
+    .navlinks a{transition:.25s}.navlinks a:hover{color:var(--gold2)}
+    .navcta,.btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:9px;
+      border:1px solid rgba(228,199,126,.65);padding:12px 19px;border-radius:999px;
+      color:#0b0b09;background:linear-gradient(135deg,var(--gold2),var(--gold));
+      font-weight:700;font-size:12px;letter-spacing:.05em;position:relative;overflow:hidden;
+    }
+    .btn:after,.navcta:after{
+      content:"";position:absolute;inset:-2px;transform:translateX(-120%);
+      background:linear-gradient(110deg,transparent,rgba(255,255,255,.55),transparent);
+      transition:.65s;
+    }
+    .btn:hover:after,.navcta:hover:after{transform:translateX(120%)}
+    .ghost{background:transparent;color:var(--text);border-color:var(--line)}
+    .menu{display:none;background:none;border:0;color:white;font-size:27px}
+
+    .hero{min-height:100svh;position:relative;display:flex;align-items:center;overflow:hidden}
+    .hero-bg{position:absolute;inset:0;background:
+      linear-gradient(90deg,rgba(8,8,7,.96) 0%,rgba(8,8,7,.74) 42%,rgba(8,8,7,.22) 100%),
+      url("movement.jpg") center/cover no-repeat;
+      filter:saturate(.7);
+      transform:scale(1.03);
+    }
+    .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,var(--bg) 0%,transparent 20%,transparent 75%,rgba(0,0,0,.35))}
+    .hero-content{position:relative;z-index:2;padding-top:70px;max-width:720px}
+    .eyebrow{font-size:12px;letter-spacing:.22em;color:var(--gold2);font-weight:700;text-transform:uppercase;margin-bottom:18px}
+    h1{font:600 clamp(48px,8vw,92px)/.94 "Playfair Display",serif;letter-spacing:-.045em}
+    h1 em{font-style:normal;color:var(--gold2)}
+    .hero p{margin:28px 0;color:#d0ccc3;font-size:18px;max-width:610px}
+    .actions{display:flex;gap:12px;flex-wrap:wrap}
+    .scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:3;color:#a9a59b;font-size:10px;letter-spacing:.2em;text-transform:uppercase}
+    .scroll:after{content:"";display:block;width:1px;height:42px;background:linear-gradient(var(--gold),transparent);margin:8px auto 0}
+
+    section{padding:110px 0;position:relative}
+    .section-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:48px}
+    .section-head h2{font:600 clamp(34px,5vw,58px)/1 "Playfair Display",serif;letter-spacing:-.03em}
+    .section-head p{max-width:430px;color:var(--muted);font-size:15px}
+
+    .stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr)}
+    .stat{padding:32px 22px;border-right:1px solid var(--line)}
+    .stat:last-child{border:0}.stat b{font:600 27px "Playfair Display";display:block;color:var(--gold2);margin-bottom:5px}.stat span{font-size:12px;color:var(--muted)}
+
+    .about{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+    .photo{border:1px solid var(--line);padding:10px;background:#0d0d0b;position:relative}
+    .photo img{width:100%;display:block;aspect-ratio:4/5;object-fit:cover;filter:saturate(.72)}
+    .photo:before{content:"";position:absolute;inset:-12px;border:1px solid rgba(200,164,91,.12);pointer-events:none}
+    .about-copy h3{font:600 clamp(30px,4vw,48px)/1.05 "Playfair Display";margin:12px 0 20px}
+    .about-copy p{color:var(--muted);margin-bottom:20px}
+    .signature{font:600 13px;letter-spacing:.08em;color:var(--gold2)}
+
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{
+      background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
+      border:1px solid var(--line);padding:28px;min-height:230px;
+      position:relative;overflow:hidden;transition:transform .35s,border-color .35s,box-shadow .35s;
+      transform-style:preserve-3d;
+    }
+    .card:before{content:"";position:absolute;width:160px;height:160px;border-radius:50%;background:rgba(200,164,91,.09);filter:blur(35px);right:-90px;bottom:-90px;transition:.5s}
+    .card:hover{border-color:rgba(228,199,126,.5);box-shadow:0 20px 60px rgba(0,0,0,.25)}
+    .card:hover:before{transform:scale(2)}
+    .num{font-size:11px;color:var(--gold2);letter-spacing:.18em}
+    .card h3{font:600 27px "Playfair Display";margin:38px 0 10px}
+    .card p{color:var(--muted);font-size:14px}
+
+    .assessment{background:
+      linear-gradient(90deg,rgba(8,8,7,.96),rgba(8,8,7,.76)),
+      url("nutrition.jpg") center/cover fixed;
+      border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    }
+    .assessment-inner{display:grid;grid-template-columns:1.2fr .8fr;gap:60px;align-items:center}
+    .assessment h2{font:600 clamp(38px,5vw,65px)/1 "Playfair Display";margin:14px 0 20px}
+    .assessment p{color:#bdb8ad;max-width:650px}
+    .ava{border:1px solid rgba(228,199,126,.4);padding:35px;background:rgba(10,10,8,.55);backdrop-filter:blur(10px)}
+    .ava b{display:block;color:var(--gold2);font-size:25px;margin-bottom:10px}
+    .ava span{color:#aaa69c;font-size:13px}
+
+    .transformation{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:center}
+    .numbers{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+    .numbers strong{font:600 clamp(55px,8vw,100px)/1 "Playfair Display";color:var(--gold2)}
+    .numbers i{font-style:normal;color:#6e6b63;font-size:30px}
+    .quote{border-left:2px solid var(--gold);padding-left:20px;color:#c4bfb5;margin-top:28px}
+
+    .sport{position:relative;overflow:hidden}
+    .sport-image{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,8,7,.98),rgba(8,8,7,.72),rgba(8,8,7,.55)),url("movement.jpg") center/cover;filter:saturate(.65)}
+    .sport-content{position:relative;z-index:1;max-width:680px}
+    .sport h2{font:600 clamp(40px,6vw,70px)/1 "Playfair Display";margin:15px 0}
+    .pillrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+    .pill{border:1px solid var(--line);border-radius:999px;padding:9px 14px;color:#d0cbc0;font-size:12px;background:rgba(255,255,255,.025)}
+
+    .contact{background:radial-gradient(circle at 50% 0,rgba(200,164,91,.12),transparent 35%),var(--bg2);text-align:center}
+    .contact h2{font:600 clamp(42px,7vw,78px)/.98 "Playfair Display";margin:12px auto 20px;max-width:800px}
+    .contact p{color:var(--muted);max-width:580px;margin:0 auto 28px}
+    .contact-info{display:flex;justify-content:center;gap:25px;flex-wrap:wrap;margin-top:32px;color:#bbb6ac;font-size:13px}
+
+    footer{padding:34px 0;border-top:1px solid var(--line);color:#77736b;font-size:12px}
+    .footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    footer b{color:#d2cdc2}
+
+    @media(max-width:850px){
+      .navlinks{display:none}.menu{display:block}
+      .navlinks.open{display:flex;position:absolute;top:76px;left:0;right:0;padding:22px;flex-direction:column;align-items:flex-start;background:rgba(8,8,7,.96);border-bottom:1px solid var(--line)}
+      .navcta{display:none}
+      .hero-bg{background-position:62% center}
+      .hero-content{padding-top:80px}
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
+      .about,.assessment-inner,.transformation{grid-template-columns:1fr;gap:40px}
+      .cards{grid-template-columns:1fr}
+      section{padding:80px 0}
+    }
+    @media(max-width:520px){
+      .container{width:min(calc(100% - 28px),var(--max))}
+      h1{font-size:55px}.hero p{font-size:16px}
+      .actions .btn{width:100%}
+      .stats{grid-template-columns:1fr 1fr}.stat{padding:22px 12px}
+      .section-head{display:block}.section-head p{margin-top:15px}
+      .numbers strong{font-size:62px}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="noise"></div>
+
+  <header id="header">
+    <nav class="container">
+      <a class="brand" href="#inicio">ANDERSON <span>CARVALHO</span></a>
+      <div class="navlinks" id="navlinks">
+        <a href="#inicio">Início</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#avaliacao">Avaliação</a>
+        <a href="#resultados">Resultados</a>
+        <a href="#contato">Contato</a>
+      </div>
+      <a class="navcta" href="https://wa.me/5511991676601?text=Ol%C3%A1%2C%20Anderson!%20Gostaria%20de%20saber%20mais%20sobre%20o%20acompanhamento%20nutricional." target="_blank">AGENDAR</a>
+      <button class="menu" id="menu" aria-label="Abrir menu">☰</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-bg"></div><div class="aurora"></div>
+      <div class="container hero-content reveal">
+        <div class="eyebrow">Nutricionista • CRN-9 31883</div>
+        <h1>Transformação<br><em>corporal.</em></h1>
+        <p>Nutrição personalizada para emagrecimento, hipertrofia, longevidade e performance.</p>
+        <div class="actions">
+          <a class="btn" href="https://wa.me/5511991676601?text=Ol%C3%A1%2C%20Anderson!%20Gostaria%20de%20saber%20mais%20sobre%20o%20acompanhamento%20nutricional." target="_blank">AGENDAR CONSULTA ↗</a>
+          <a class="btn ghost" href="https://www.instagram.com/andscarvallho/" target="_blank">INSTAGRAM</a>
+        </div>
+      </div>
+      <div class="scroll">Scroll</div>
+    </section>
+
+    <section class="container" style="padding-top:45px;padding-bottom:45px">
+      <div class="stats reveal">
+        <div class="stat"><b>Emagrecimento</b><span>Estratégia nutricional individualizada</span></div>
+        <div class="stat"><b>Hipertrofia</b><span>Foco em ganho de massa muscular</span></div>
+        <div class="stat"><b>Longevidade</b><span>Saúde e qualidade de vida</span></div>
+        <div class="stat"><b>Performance</b><span>Nutrição para pessoas ativas</span></div>
+      </div>
+    </section>
+
+    <section id="sobre">
+      <div class="container about">
+        <div class="photo reveal"><img src="movement.jpg" alt="Imagem relacionada a movimento e qualidade de vida"></div>
+        <div class="about-copy reveal">
+          <div class="eyebrow">Sobre o profissional</div>
+          <h3>Estratégia, acompanhamento e <span class="gold">transformação.</span></h3>
+          <p>Anderson Carvalho é nutricionista e atua com foco em emagrecimento, hipertrofia, longevidade, avaliação corporal e nutrição esportiva.</p>
+          <p>O acompanhamento busca alinhar a estratégia nutricional aos objetivos, rotina e momento de cada pessoa.</p>
+          <div class="signature">ANDERSON CARVALHO • CRN-9 31883</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="servicos">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><div class="eyebrow">Áreas de atuação</div><h2>Como posso ajudar?</h2></div>
+          <p>Um acompanhamento pensado para diferentes objetivos, com uma abordagem individualizada.</p>
+        </div>
+        <div class="cards">
+          <article class="card tilt reveal"><span class="num">01</span><h3>Emagrecimento</h3><p>Estratégias nutricionais para quem busca redução de peso e transformação corporal.</p></article>
+          <article class="card tilt reveal"><span class="num">02</span><h3>Hipertrofia</h3><p>Nutrição direcionada para pessoas que buscam ganho de massa muscular e evolução física.</p></article>
+          <article class="card tilt reveal"><span class="num">03</span><h3>Longevidade</h3><p>Uma abordagem voltada para saúde, qualidade de vida e hábitos sustentáveis.</p></article>
+          <article class="card tilt reveal"><span class="num">04</span><h3>Avaliação corporal</h3><p>Conheça melhor seu corpo e acompanhe sua evolução por meio de avaliação corporal.</p></article>
+          <article class="card tilt reveal"><span class="num">05</span><h3>Nutrição esportiva</h3><p>Estratégias nutricionais para pessoas fisicamente ativas e praticantes de esportes.</p></article>
+          <article class="card tilt reveal"><span class="num">06</span><h3>Jiu-jitsu</h3><p>Nutrição alinhada à rotina de quem pratica jiu-jitsu e outros esportes de combate.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="assessment" id="avaliacao">
+      <div class="container assessment-inner">
+        <div class="reveal">
+          <div class="eyebrow">Avaliação corporal</div>
+          <h2>Entenda melhor<br>o seu <span class="gold">corpo.</span></h2>
+          <p>O perfil profissional informa a utilização da avaliação corporal com AVABio 380 para auxiliar no acompanhamento da evolução.</p>
+        </div>
+        <div class="ava reveal">
+          <b>AVABio 380</b>
+          <span>Avaliação corporal informada pelo profissional. Os detalhes técnicos e condições do serviço podem ser atualizados pelo consultório.</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="resultados">
+      <div class="container transformation">
+        <div class="reveal">
+          <div class="eyebrow">Transformação corporal</div>
+          <div class="numbers"><strong>132</strong><i>→</i><strong>121</strong><i>→</i><strong>112</strong></div>
+          <p class="quote">Exemplo de evolução apresentado em conteúdo do profissional. Cada processo é individual e não representa uma promessa de resultado.</p>
+        </div>
+        <div class="photo reveal"><img src="nutrition.jpg" alt="Alimentação saudável"></div>
+      </div>
+    </section>
+
+    <section class="sport">
+      <div class="sport-image"></div>
+      <div class="container sport-content reveal">
+        <div class="eyebrow">Nutrição esportiva</div>
+        <h2>Nutrição para quem <span class="gold">vive o esporte.</span></h2>
+        <p>O esporte exige estratégia, disciplina e recuperação. A nutrição pode fazer parte desse processo.</p>
+        <div class="pillrow">
+          <span class="pill">Jiu-jitsu</span><span class="pill">Performance</span><span class="pill">Composição corporal</span><span class="pill">Rotina esportiva</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato" class="contact">
+      <div class="container reveal">
+        <div class="eyebrow">Vamos conversar</div>
+        <h2>Pronto para começar sua <span class="gold">transformação?</span></h2>
+        <p>Entre em contato para saber mais sobre o acompanhamento nutricional.</p>
+        <a class="btn" href="https://wa.me/5511991676601?text=Ol%C3%A1%2C%20Anderson!%20Gostaria%20de%20saber%20mais%20sobre%20o%20acompanhamento%20nutricional." target="_blank">FALAR NO WHATSAPP ↗</a>
+        <div class="contact-info">
+          <span>📍 Poços de Caldas – MG</span>
+          <span>📱 +55 11 99167-6601</span>
+          <a href="https://www.instagram.com/andscarvallho/" target="_blank">📸 @andscarvallho</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span><b>Anderson Carvalho</b> • Nutricionista • CRN-9 31883</span>
+      <span>© 2026 Anderson Carvalho</span>
+    </div>
+  </footer>
+
+  <script>
+    const header = document.getElementById('header');
+    const menu = document.getElementById('menu');
+    const nav = document.getElementById('navlinks');
+
+    window.addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 20));
+
+    menu.addEventListener('click', () => nav.classList.toggle('open'));
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Spotlight effect
+    window.addEventListener('pointermove', e => {
+      document.documentElement.style.setProperty('--mx', e.clientX + 'px');
+      document.documentElement.style.setProperty('--my', e.clientY + 'px');
+    }, {passive:true});
+
+    // 3D tilt cards
+    document.querySelectorAll('.tilt').forEach(card => {
+      card.addEventListener('pointermove', e => {
+        if(innerWidth < 850) return;
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX-r.left)/r.width-.5;
+        const y = (e.clientY-r.top)/r.height-.5;
+        card.style.transform = `perspective(700px) rotateX(${y*-5}deg) rotateY(${x*5}deg) translateY(-4px)`;
+      });
+      card.addEventListener('pointerleave', () => card.style.transform = '');
+    });
+  </script>
+</body>
+</html>
